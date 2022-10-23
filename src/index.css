@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login-contain{
+  max-width: 400px;
+  margin: auto;
+  margin-top: 10%;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.form-outline{
+  border: 1px solid grey;
+}
