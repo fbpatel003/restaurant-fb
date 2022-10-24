@@ -1,10 +1,12 @@
 import React from 'react'
 import LoginPage from './LogInPage'
 import HomePage from './HomePage'
+import { Link } from "react-router-dom";
+
 
 class MainScreen extends React.Component {
     state = { 
-        showPage : "Login"
+        showPage : "HomePage"
     } 
     
     logOutClicked = () =>{
@@ -12,16 +14,14 @@ class MainScreen extends React.Component {
     }
 
     logInSuccess = () =>{
-        this.setState({showPage : "Home"})
+        this.setState({showPage : "HomePage"})
     }
 
     render() { 
         return (
             <>
             {this.state.showPage=="Login" ? <LoginPage logInSuccess={this.logInSuccess} /> : null}
-
-            {this.state.showPage=="Home" ? <HomePage logOutClicked={this.logOutClicked} /> : null}
-            MainScreen
+            {this.state.showPage=="HomePage" ? <HomePage logOutClicked={this.logOutClicked} /> : null}
             </>
         );
     }
