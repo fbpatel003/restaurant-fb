@@ -8,23 +8,33 @@ class Home extends React.Component {
     this.state = {
       NamesArray: [],
       SearchedName : "",
-      refresh : "0"
+      refresh : 1
     };
     this.getarr = this.getarr(this)
     this.getSetSearchedName = this.getSetSearchedName.bind(this)
     this.midwayToBook = this.midwayToBook.bind(this)
+    this.midwayToRemove = this.midwayToRemove.bind(this)
   }
 
+  // just a midway path function which will pass callback to parent received from child
+  midwayToRemove(restoName){
+    this.props.removeItem(restoName);
+  }
+
+  // just a midway path function which will pass callback to parent received from child
   midwayToBook(bookname){
-    console.log(bookname);
+    // console.log(bookname);
     this.props.addToBook(bookname);
     const tempR = this.state.refresh + 1;
     this.setState(state=>({
       refresh : tempR
-    }))
+    })) 
   }
 
-  getarr(nul) {
+  // get current restaurant name array from parent
+  // and update to autocomplete so that it won't show 
+  // bookmarked or removed names.
+  getarr() {
     const temparr = [];
     this.props.RestaurantNames.forEach((element) => {
       temparr.push(element.name);
@@ -32,6 +42,7 @@ class Home extends React.Component {
     return temparr;
   }
 
+  // update in state current searched name 
   getSetSearchedName(name){
     const arr = this.getarr;
     this.setState(state => ({
@@ -45,7 +56,7 @@ class Home extends React.Component {
   render() {
     return (
       <>
-        <AutoComplete suggestions={this.getarr} getName={this.getSetSearchedName} midwayToBook={this.midwayToBook} />
+        <AutoComplete suggestions={this.getarr} getName={this.getSetSearchedName} midwayToBook={this.midwayToBook} midwayToRemove={this.midwayToRemove} />
       </>
     );
   }

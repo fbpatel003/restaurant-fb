@@ -14,9 +14,15 @@ class AutoComplete extends React.Component {
     };
     this.returnName = this.returnName.bind(this);
     this.sendToBookMark = this.sendToBookMark.bind(this);
+    this.RemoveItem = this.RemoveItem.bind(this);
   }
+
+  // everytime when user types a letter in input bar
+  // this function updates auto complete search list
   onChange = (e) => {
     const { suggestions } = this.props;
+    // console.log(suggestions)
+    // console.log(this.state.totalNames)
     this.setState((state) => ({
       totalNames: suggestions,
     }));
@@ -26,7 +32,6 @@ class AutoComplete extends React.Component {
       (suggestion) =>
         suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-
     this.setState({
       activeSuggestion: 0,
       filteredSuggestions,
@@ -34,6 +39,8 @@ class AutoComplete extends React.Component {
       userInput: e.currentTarget.value,
     });
   };
+
+  // if user clicks on search list
   onClick = (e) => {
     this.setState({
       activeSuggestion: 0,
@@ -42,6 +49,8 @@ class AutoComplete extends React.Component {
       userInput: e.currentTarget.innerText,
     });
   };
+
+  // to traverse through searched list using up down key
   onKeyDown = (e) => {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
@@ -66,13 +75,14 @@ class AutoComplete extends React.Component {
     }
   };
 
+  // a callback funtion to a parent which will keep track of what searched
   returnName() {
     const searched = document.getElementById("addInput").value;
     this.setState((state) => ({
       finaleReturn: searched,
     }));
-    console.log("searched");
-    console.log(searched);
+    // console.log("searched");
+    // console.log(searched);
     this.props.getName(searched);
     this.setState({ map: "off" });
     this.state.totalNames.forEach((element) => {
@@ -82,15 +92,22 @@ class AutoComplete extends React.Component {
     });
   }
 
+  // if user clicks on bookmark, then hide that map, send the
+  // name of restaurant to parent to add in bookmark
   sendToBookMark() {
-    console.log("autocomp reached")
-    this.setState({map:"off"})
-    console.log(this.state.finaleReturn);
+    // console.log("autocomp reached")
+    this.setState({ map: "off" });
+    // console.log(this.state.finaleReturn);
     this.props.midwayToBook(this.state.finaleReturn);
+    this.render();
   }
 
-  RemoveItem(){
-    this.onChange();
+  // if user clicks on remove, then hide that map, send the
+  // name of restaurant to parent to remove it
+  RemoveItem() {
+    // console.log("removeItem Reached ")
+    this.setState({ map: "off" });
+    this.props.midwayToRemove(this.state.finaleReturn);
   }
 
   render() {
@@ -106,6 +123,7 @@ class AutoComplete extends React.Component {
       },
     } = this;
 
+    // to show active suggestion
     let suggestionsListComponent;
     if (showSuggestions && userInput) {
       if (filteredSuggestions.length) {
@@ -114,7 +132,6 @@ class AutoComplete extends React.Component {
             {filteredSuggestions.map((suggestion, index) => {
               let className;
 
-              // Flag the active suggestion with a class
               if (index === activeSuggestion) {
                 className = "suggestion-active";
               }
@@ -163,7 +180,8 @@ class AutoComplete extends React.Component {
                   <iframe
                     width={600}
                     height={450}
-                    // src={loadSrc}
+                    // src link to direct search for the searched name in embeded studio
+                    // src={ 'https://datastudio.google.com/embed/reporting/430242fa-4162-4950-a984-824b3b355b3c/page/dQMwC?params=%7B"ds2.name2":"' + this.state.finaleReturn + '"%7D' }
                     src="https://datastudio.google.com/embed/reporting/430242fa-4162-4950-a984-824b3b355b3c/page/dQMwC"
                     frameBorder={0}
                     style={{ border: 0 }}
