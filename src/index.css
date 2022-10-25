@@ -130,10 +130,28 @@ li a:hover:not(.active) {
   color: blue;
 }
 
+#Book-2{
+  float: left;
+  margin-left: 260px;
+  color: blue;
+}
+
 #Remove:hover{
   color: orange;
 }
 
 .card{
   max-width: 650px;
+}
+
+.raw{
+  margin: auto;
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+#LogOut{
+  margin-top: 250%;
+  /* margin-bottom: 0%; */
+  float: inline-end;
 }
